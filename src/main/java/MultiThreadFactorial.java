@@ -1,23 +1,35 @@
 import java.math.BigInteger;
 
 public class MultiThreadFactorial {
-    private static int NUM_THREADS;
+
+    private static int NUM_THREADS = 8;
 
     /**
-     * Default constructor: use 4 threads
+     * Default constructor: use 8 threads
      */
-    public MultiThreadFactorial() {
-        NUM_THREADS = 4;
+    MultiThreadFactorial() {
     }
 
     /**
      * @param threadNum number of threads intended to use
      * Constructor that specifies the number of threads to use
      */
-    public MultiThreadFactorial(int threadNum){
-        NUM_THREADS = threadNum;
+    MultiThreadFactorial(int threadNum){
+        this.NUM_THREADS = threadNum;
     }
 
+
+    public BigInteger singleThreadFactorial(long n){
+        if(n < 0)
+            throw new ArithmeticException("invalid number");
+        if(n == 0 || n == 1)
+            return BigInteger.ONE;
+        BigInteger result = BigInteger.ONE;
+        for(long i = 2; i <= n; i++){
+            result = result.multiply(BigInteger.valueOf(i));
+        }
+        return result;
+    }
     /**
      * @param n a non-negative integer
      * @return n! (n factorial)
@@ -34,7 +46,6 @@ public class MultiThreadFactorial {
             fr.run();
             return fr.getResult();
         }
-
         Thread[] threads = new Thread[NUM_THREADS];
         FactorialRunnable[] fr = new FactorialRunnable[NUM_THREADS];
         for(int i = 0; i < NUM_THREADS; i++){
@@ -63,6 +74,7 @@ public class MultiThreadFactorial {
         BigInteger result = BigInteger.ONE;
         for(int i = 0; i < NUM_THREADS; i++){
             try{
+                //System.out.println("Thread " + i);
                 result = result.multiply(fr[i].getResult());
             }catch(Exception e){
                 e.printStackTrace();
@@ -70,6 +82,40 @@ public class MultiThreadFactorial {
         }
 
         return result;
+    }
+
+    /**
+     * @param n input for n!
+     * @return the execution time for factorial() in nanoseconds
+     * Run multiple times and get the average execution time
+     */
+    public static long benchFactorial(long n, int reps){
+        MultiThreadFactorial mf = new MultiThreadFactorial();
+        long sum = 0;
+        for(int i = 0; i < reps; i++) {
+            long start = System.nanoTime();
+            mf.factorial(n);
+            long end = System.nanoTime();
+            sum += (end - start);
+        }
+        return sum / reps;
+    }
+
+    /**
+     * @param n input for n!
+     * @return the execution time for factorial() in nanoseconds
+     * Run multiple times and get the average execution time
+     */
+    public static long benchSingleThreadFactorial(long n, int reps){
+        MultiThreadFactorial mf = new MultiThreadFactorial();
+        long sum = 0;
+        for(int i = 0; i < reps; i++) {
+            long start = System.nanoTime();
+            mf.singleThreadFactorial(n);
+            long end = System.nanoTime();
+            sum += (end - start);
+        }
+        return sum / reps;
     }
 
     /**

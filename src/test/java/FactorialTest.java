@@ -27,7 +27,7 @@ class FactorialTest {
 
     // Test that factorial() will handle out of range input
     @Test
-    void factorial_invalid() {
+    void testFactorialInvalid() {
         assertThrows(ArithmeticException.class,
                 () ->Factorial.factorial(-10));
         assertThrows(ArithmeticException.class,
@@ -38,7 +38,7 @@ class FactorialTest {
     // Test all acceptable inputs from 0 to 20 against the expected result
     @ParameterizedTest
     @MethodSource("testSet")
-    void factorial_test(long[] set){
+    void testFactorial(long[] set){
         assertEquals(set[1], Factorial.factorial(set[0]));
     }
 

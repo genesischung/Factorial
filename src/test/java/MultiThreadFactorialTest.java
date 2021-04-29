@@ -15,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MultiThreadFactorialTest {
 
-    MultiThreadFactorial mf = new MultiThreadFactorial(8);
+    int threadsAvailable = Runtime.getRuntime().availableProcessors();
+    MultiThreadFactorial mf = new MultiThreadFactorial(threadsAvailable);
 
     // A test set from the previous exercise
     // including all the expected result for input from 0 to 20
@@ -32,7 +33,7 @@ class MultiThreadFactorialTest {
 
     // Test that factorial() will throw exception for negative inputs
     @Test
-    void factorial_invalid() {
+    void testFactorialInvalid() {
         assertThrows(ArithmeticException.class,
                 () ->mf.factorial(-10));
     }
@@ -40,7 +41,7 @@ class MultiThreadFactorialTest {
     // Test inputs from 0 to 20 against the expected result
     @ParameterizedTest
     @MethodSource("testSet")
-    void factorial_test(long[] set){
+    void testFactorial(long[] set){
         assertEquals(BigInteger.valueOf(set[1]), mf.factorial(set[0]));
         //System.out.println(mf.factorial(set[0]));
     }
@@ -58,10 +59,30 @@ class MultiThreadFactorialTest {
                     "14685929638952175999932299156089414639761565182862" +
                     "536979208272237582511852109168640000000000000000000000"
 })
-    void factorial_big_test(String first, String second){
+    void testBigFactorial(String first, String second){
         long n = Long.parseLong(first);
         BigInteger expected = new BigInteger(second);
         assertEquals(expected, mf.factorial(n));
+    }
+
+    // A test for Question 2 and Question 3 with single thread factorial
+    @Test
+    void benchSingleFactorial(){
+        System.out.println(mf.benchSingleThreadFactorial(1000, 20) +  " ns");
+        System.out.println(mf.benchSingleThreadFactorial(10000, 20)  +  " ns");
+        System.out.println(mf.benchSingleThreadFactorial(100000, 20)  +  " ns");
+        //System.out.println(mfSingle.benchSingleThreadFactorial(1000000, 1)  +  " ns");
+
+    }
+
+    // Another test for Question 2 and Question 3 with multi thread factorial
+    @Test
+    void benchMultiFactorial(){
+        MultiThreadFactorial mfMulti = new MultiThreadFactorial(12);
+        System.out.println(mfMulti.benchFactorial(1000, 20) +  " ns");
+        System.out.println(mfMulti.benchFactorial(10000, 20)  +  " ns");
+        System.out.println(mfMulti.benchFactorial(100000, 20)  +  " ns");
+        System.out.println(mfMulti.benchFactorial(1000000, 10)  +  " ns");
     }
 
 }

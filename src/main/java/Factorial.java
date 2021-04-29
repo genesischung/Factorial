@@ -23,4 +23,15 @@ public class Factorial {
             return 1;
         return n * factorial(n - 1);
     }
+
+    /**
+     * @param n input for n!
+     * @return the exceution time for factorial() in nanoseconds
+     */
+    public static long BenchFactorial(long n){
+        long start = System.nanoTime();
+        factorial(n);
+        long end = System.nanoTime();
+        return end - start;
+    }
 }
