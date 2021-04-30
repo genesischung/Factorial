@@ -2,19 +2,22 @@ import java.math.BigInteger;
 
 public class MultiThreadFactorial {
 
-    private static int NUM_THREADS = 8;
+    private static int NUM_THREADS;
 
     /**
      * Default constructor: use 8 threads
      */
-    MultiThreadFactorial() {
+    public MultiThreadFactorial() {
+        //System.out.println("default constructor");
+        NUM_THREADS = 8;
     }
 
     /**
      * @param threadNum number of threads intended to use
      * Constructor that specifies the number of threads to use
      */
-    MultiThreadFactorial(int threadNum){
+    public MultiThreadFactorial(int threadNum){
+        //System.out.println("parametrized constructor");
         this.NUM_THREADS = threadNum;
     }
 
@@ -89,8 +92,8 @@ public class MultiThreadFactorial {
      * @return the execution time for factorial() in nanoseconds
      * Run multiple times and get the average execution time
      */
-    public static long benchFactorial(long n, int reps){
-        MultiThreadFactorial mf = new MultiThreadFactorial();
+    public static long benchFactorial(long n, int reps, int threads){
+        MultiThreadFactorial mf = new MultiThreadFactorial(threads);
         long sum = 0;
         for(int i = 0; i < reps; i++) {
             long start = System.nanoTime();

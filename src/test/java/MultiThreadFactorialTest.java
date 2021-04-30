@@ -76,13 +76,32 @@ class MultiThreadFactorialTest {
     }
 
     // Another test for Question 2 and Question 3 with multi thread factorial
+    // CAUTION: will likely take a long time
     @Test
     void benchMultiFactorial(){
-        MultiThreadFactorial mfMulti = new MultiThreadFactorial(12);
-        System.out.println(mfMulti.benchFactorial(1000, 20) +  " ns");
-        System.out.println(mfMulti.benchFactorial(10000, 20)  +  " ns");
-        System.out.println(mfMulti.benchFactorial(100000, 20)  +  " ns");
-        System.out.println(mfMulti.benchFactorial(1000000, 10)  +  " ns");
+        System.out.println("Thread = 4");
+        System.out.println(mf.benchFactorial(1000, 20, 4) +  " ns");
+        System.out.println(mf.benchFactorial(10000, 20, 4)  +  " ns");
+        System.out.println(mf.benchFactorial(100000, 20, 4)  +  " ns");
+        System.out.println(mf.benchFactorial(1000000, 10, 4)  +  " ns\n");
+
+        System.out.println("Thread = 8");
+        System.out.println(mf.benchFactorial(1000, 20, 8) +  " ns");
+        System.out.println(mf.benchFactorial(10000, 20, 8)  +  " ns");
+        System.out.println(mf.benchFactorial(100000, 20, 8)  +  " ns");
+        System.out.println(mf.benchFactorial(1000000, 10, 8)  +  " ns\n");
+
+        System.out.println("Thread = 12");
+        System.out.println(mf.benchFactorial(1000, 20, 12) +  " ns");
+        System.out.println(mf.benchFactorial(10000, 20, 12)  +  " ns");
+        System.out.println(mf.benchFactorial(100000, 20, 12)  +  " ns");
+        System.out.println(mf.benchFactorial(1000000, 10, 12)  +  " ns\n");
+
+        System.out.println("Thread = 24");
+        System.out.println(mf.benchFactorial(1000, 20, 24) +  " ns");
+        System.out.println(mf.benchFactorial(10000, 20, 24)  +  " ns");
+        System.out.println(mf.benchFactorial(100000, 20, 24)  +  " ns");
+        System.out.println(mf.benchFactorial(1000000, 10, 24)  +  " ns\n");
     }
 
 }
